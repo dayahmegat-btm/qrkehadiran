@@ -234,10 +234,50 @@ EPSM_API_CACHE_MINUTES=60
 - **Database Schema**: `ERD.md` - Complete Entity Relationship Diagram with 18 tables
 - **API Integration**: `API_INTEGRATION.md` - EPSM API integration specification
 - **Business Rules**: `RULES.md` - Complete business rules, validation rules, calculation formulas, and compliance requirements (200+ rules across 15 categories)
+- **Project Tasks**: `TASKS.md` - Complete implementation task breakdown organized by phases (Phase 0-3), with 100+ tasks, effort estimates, dependencies, and acceptance criteria (~450 developer-days, 6-9 months timeline)
+
+## Implementation Phases
+
+The project is divided into 4 phases with clear milestones:
+
+### **Phase 0: Project Setup** (2-3 weeks)
+- Development environment, CI/CD pipeline
+- Database schema implementation (18 tables)
+- Basic authentication setup
+- **Milestone**: Dev environment ready for all developers
+
+### **Phase 1: MVP** (10-12 weeks)
+- User registration with EPSM integration
+- Single-day event creation & management
+- QR code generation (static mode) & scanning
+- Physical event attendance with geolocation
+- Basic reporting & certificate generation
+- **Milestone**: 1 pilot department conducts 1 course with 50 participants
+
+### **Phase 2: Advanced Features** (8-10 weeks)
+- Multi-day events with sessions
+- Dynamic QR codes (30s rotation)
+- Online and hybrid event support
+- Participant substitution workflows
+- Advanced RBAC with delegation
+- Training hours tracking (56-hour annual target)
+- **Milestone**: 10 departments actively using system, 100+ events
+
+### **Phase 3: Integration & Polish** (6-8 weeks)
+- Progressive Web App (PWA) for mobile
+- Performance optimization (500+ concurrent users)
+- Security audit & penetration testing
+- API documentation & user manuals
+- Production deployment
+- **Milestone**: All 30+ departments onboarded, 99.5% uptime
+
+**Total Timeline**: 6-9 months with team of 10-12 people (~450 developer-days)
+
+**See**: `TASKS.md` for complete task breakdown with dependencies and acceptance criteria.
 
 ## Future Phases (Out of Scope for v1.0)
 
 - Financial management/allowance claims integration
 - Learning Management System (LMS) features
 - Performance evaluation (quizzes, tests)
-- HRMIS integration (planned for Phase 3)
+- Full HRMIS integration (Phase 3 has basic API integration)
