@@ -106,14 +106,85 @@ The system will implement hierarchical role-based access:
 ## Common Tasks (To Be Updated When Codebase Exists)
 
 This section will be populated when the actual implementation begins. It will include:
+
+### Development Setup
 - How to set up the development environment
-- How to run the application locally
-- How to run tests
-- How to build for production
-- Database migration commands
-- How to generate QR codes
-- How to test push notifications
-- How to import users via CSV
+- How to run the application locally (Laravel + Vue/Inertia)
+- Database migration commands: `php artisan migrate`
+- Seed default data: `php artisan db:seed`
+
+### Testing
+- Run tests: `php artisan test`
+- Run specific test suite: `php artisan test --testsuite=Feature`
+- Test EPSM API integration: `php artisan epsm:health-check`
+
+### EPSM API Operations
+- Sync user with EPSM: `php artisan epsm:sync-user {no_kp}`
+- Bulk sync all users: `php artisan epsm:sync-all` (scheduled daily)
+- Clear EPSM cache: `php artisan cache:forget "epsm_staff_{NO_KP}"`
+- Check API health: `php artisan epsm:health-check`
+
+### QR Code Operations
+- Generate QR codes for events
+- Regenerate dynamic QR (rotates every 30 seconds)
+- Test QR scanning endpoints
+
+### Certificate Generation
+- Generate certificates: `php artisan certificates:generate {event_id}`
+- Regenerate certificate: `php artisan certificates:regenerate {certificate_id}`
+
+### User & Role Management
+- Import users via CSV: `php artisan users:import {file.csv}`
+- Assign role: `php artisan user:assign-role {user_id} {role_name} --department={dept_id}`
+- List users by role: `php artisan users:by-role {role_name}`
+
+### Queue & Jobs
+- Run queue worker: `php artisan queue:work`
+- Monitor queues: `php artisan horizon` (if using Horizon)
+- Process email notifications
+- Process certificate generation jobs
+
+### Deployment
+- Build for production: `npm run build`
+- Clear all caches: `php artisan optimize:clear`
+- Run migrations: `php artisan migrate --force`
+
+## External API Integration
+
+### EPSM Staff Data API
+
+The system integrates with the **Kedah State Government EPSM API** to auto-populate staff information during user registration.
+
+**API Endpoint**: `https://epsm.kedah.gov.my/api_kuarters.php`
+
+**Key Integration Points**:
+1. **User Registration**: When a user enters their No. KP (IC Number), the system calls EPSM API to fetch staff data
+2. **Auto-fill Profile**: If found in EPSM, auto-populate name, employee number, email, department, position, grade
+3. **Manual Fallback**: If not found in EPSM, user fills information manually
+4. **Profile Sync**: Existing users can sync their profile with EPSM data via "Sync with EPSM" button
+
+**Implementation Details**:
+- Service class: `app/Services/EpsmApiService.php`
+- Caching: 60 minutes (configurable) to reduce API calls
+- Rate limiting: 60 requests per minute max
+- Error handling: Graceful fallback to manual entry on API failure
+- Security: API secret key stored in `.env`, never in code
+- Audit trail: Raw EPSM response stored in `users.epsm_raw_data` JSON field
+
+**Configuration** (`.env`):
+```ini
+EPSM_API_URL=https://epsm.kedah.gov.my/api_kuarters.php
+EPSM_API_SECRET_KEY=DigitalPKN2021
+EPSM_API_TIMEOUT=10
+EPSM_API_CACHE_MINUTES=60
+```
+
+**Database Fields** (added to `users` table):
+- `epsm_verified` (BOOLEAN): Whether user data was verified with EPSM API
+- `epsm_last_synced_at` (TIMESTAMP): Last successful sync timestamp
+- `epsm_raw_data` (JSON): Raw EPSM API response for audit trail
+
+**See**: `API_INTEGRATION.md` for complete integration specification, workflows, and troubleshooting guide.
 
 ## Reference Documents
 
@@ -124,6 +195,8 @@ This section will be populated when the actual implementation begins. It will in
   - Contains UI/UX wireframes (section 11)
   - Contains deployment architecture (section 12)
   - Contains security requirements (section 13)
+- **Database Schema**: `ERD.md` - Complete Entity Relationship Diagram with 18 tables
+- **API Integration**: `API_INTEGRATION.md` - EPSM API integration specification
 
 ## Future Phases (Out of Scope for v1.0)
 

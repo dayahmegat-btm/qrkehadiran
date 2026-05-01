@@ -24,13 +24,16 @@ This ERD represents the complete database schema for the e-DAFTAR Kedah system, 
 | gred | VARCHAR(20) | | Government grade (e.g., N32, N29) |
 | peranan | VARCHAR(50) | | Primary role (display only) |
 | status_aktif | BOOLEAN | DEFAULT TRUE | Active status |
+| epsm_verified | BOOLEAN | DEFAULT FALSE | Verified with EPSM API |
+| epsm_last_synced_at | TIMESTAMP | | Last EPSM sync timestamp |
+| epsm_raw_data | JSON | | Raw EPSM API response (audit trail) |
 | dicipta_pada | TIMESTAMP | | Created at |
 | dikemaskini_pada | TIMESTAMP | | Updated at |
 
 **Indexes**:
 - PRIMARY: id
 - UNIQUE: no_kp, no_pekerja, emel
-- INDEX: jabatan_id, status_aktif
+- INDEX: jabatan_id, status_aktif, epsm_verified
 
 ---
 
@@ -554,6 +557,48 @@ All critical tables ──(triggers)──> audit_log
 ---
 
 ## Data Model Notes
+
+### EPSM API Integration
+
+The system integrates with the **Kedah State Government EPSM API** to auto-populate user profiles during registration:
+
+**API Endpoint**: `https://epsm.kedah.gov.my/api_kuarters.php?secret_key=DigitalPKN2021&no_kp={IC_NUMBER}`
+
+**User Registration Flow**:
+1. User enters No. KP (IC Number)
+2. System calls EPSM API to fetch staff data
+3. If found: Auto-fill name, employee number, email, department, position, grade
+4. If not found: User fills information manually
+5. System tracks verification status in `users.epsm_verified` field
+
+**EPSM Tracking Fields**:
+- `epsm_verified` (BOOLEAN): Whether user data was verified with EPSM API
+- `epsm_last_synced_at` (TIMESTAMP): Last successful sync with EPSM
+- `epsm_raw_data` (JSON): Raw EPSM API response for audit trail
+
+**Department Mapping**:
+- EPSM returns `kod_jabatan` (department code)
+- System looks up matching `jabatan.kod_jabatan` to get `jabatan.id`
+- If department code not found, fallback to manual department selection or create new department
+
+**Profile Sync**:
+- Existing users can click "Sync with EPSM" button to refresh their profile
+- System shows comparison table of current vs EPSM data
+- User confirms which fields to update
+- Sync timestamp recorded in `epsm_last_synced_at`
+
+**Caching Strategy**:
+- EPSM responses cached for 60 minutes (configurable)
+- Cache key: `epsm_staff_{no_kp}`
+- Reduces API load and improves response time
+- Not-found results cached for 5 minutes only
+
+**Error Handling**:
+- API timeout: Graceful fallback to manual registration
+- Invalid department code: Allow manual department selection
+- API down: System continues with manual entry, queue sync for later
+
+**See**: `API_INTEGRATION.md` for complete specification.
 
 ### Multi-Tenancy Implementation
 
