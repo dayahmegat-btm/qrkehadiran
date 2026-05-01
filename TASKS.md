@@ -96,12 +96,12 @@ This document provides a complete task breakdown for implementing the e-DAFTAR K
 **Assigned To**: DevOps Lead + Backend Lead
 
 **Tasks**:
-- [ ] Install Laravel 11 with PHP 8.2+
-- [ ] Set up MySQL 8.0 database
-- [ ] Install Redis for caching and queues
-- [ ] Configure MinIO/S3 for file storage
-- [ ] Set up local development with Docker Compose
-- [ ] Create `.env.example` with all required variables
+- [x] Install Laravel 11 with PHP 8.2+
+- [x] Set up MySQL 8.0 database
+- [x] Install Redis for caching and queues
+- [x] Configure MinIO/S3 for file storage
+- [x] Set up local development with Docker Compose
+- [x] Create `.env.example` with all required variables
 
 **Dependencies**: None
 
