@@ -1,0 +1,25 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - app
+        - config
+        - database
+        - routes
+
+    # Exclude generated files and vendor
+    excludePaths:
+        - app/Console/Kernel.php
+        - bootstrap/*
+        - storage/*
+        - vendor/*
+
+    # Check missing types
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+
+    # Custom rules
+    checkModelProperties: true
+    checkOctaneCompatibility: true

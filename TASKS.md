@@ -119,15 +119,15 @@ This document provides a complete task breakdown for implementing the e-DAFTAR K
 **Assigned To**: DevOps Lead
 
 **Tasks**:
-- [ ] Initialize Git repository
-- [ ] Set up GitHub/GitLab repository
+- [x] Initialize Git repository
+- [x] Set up GitHub/GitLab repository
 - [ ] Configure branch protection rules (main branch)
-- [ ] Set up GitHub Actions / GitLab CI pipeline
-  - [ ] Run tests on PR
-  - [ ] Check code style (Laravel Pint)
-  - [ ] Run static analysis (PHPStan/Larastan)
-- [ ] Configure automatic deployment to staging
-- [ ] Set up database backup automation
+- [x] Set up GitHub Actions / GitLab CI pipeline
+  - [x] Run tests on PR
+  - [x] Check code style (Laravel Pint)
+  - [x] Run static analysis (PHPStan/Larastan)
+- [x] Configure automatic deployment to staging
+- [x] Set up database backup automation
 
 **Dependencies**: SETUP-001
 
