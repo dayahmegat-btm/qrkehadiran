@@ -144,31 +144,31 @@ This document provides a complete task breakdown for implementing the e-DAFTAR K
 **Assigned To**: Backend Lead
 
 **Tasks**:
-- [ ] Create migration for `jabatan` table
-- [ ] Create migration for `users` table with EPSM fields
-- [ ] Create migration for `acara` table
-- [ ] Create migration for `sesi` table
-- [ ] Create migration for `peserta_acara` table
-- [ ] Create migration for `kehadiran_sesi` table
-- [ ] Create migration for `kehadiran` table
-- [ ] Create migration for `gantian` table
-- [ ] Create migration for `pengesahan_berterusan` table
-- [ ] Create migration for `sijil` table
-- [ ] Create migration for `jam_latihan_tahunan` table
-- [ ] Create RBAC migrations:
-  - [ ] `peranan` table
-  - [ ] `kebenaran` table
-  - [ ] `peranan_kebenaran` pivot
-  - [ ] `pengguna_peranan` table
-  - [ ] `delegasi_peranan` table
-  - [ ] `pemilikan_resource` table
-- [ ] Create migration for `audit_log` table
-- [ ] Add all indexes, foreign keys, and constraints
-- [ ] Create database seeders for:
-  - [ ] Default roles (9 roles)
-  - [ ] Default permissions (~80 permissions)
-  - [ ] Role-permission matrix
-  - [ ] Sample departments (5-10)
+- [x] Create migration for `jabatan` table
+- [x] Create migration for `users` table with EPSM fields
+- [x] Create migration for `acara` table
+- [x] Create migration for `sesi` table
+- [x] Create migration for `peserta_acara` table
+- [x] Create migration for `kehadiran_sesi` table
+- [x] Create migration for `kehadiran` table
+- [x] Create migration for `gantian` table
+- [x] Create migration for `pengesahan_berterusan` table
+- [x] Create migration for `sijil` table
+- [x] Create migration for `jam_latihan_tahunan` table
+- [x] Create RBAC migrations:
+  - [x] `peranan` table
+  - [x] `kebenaran` table
+  - [x] `peranan_kebenaran` pivot
+  - [x] `pengguna_peranan` table
+  - [x] `delegasi_peranan` table
+  - [x] `pemilikan_resource` table
+- [x] Create migration for `audit_log` table
+- [x] Add all indexes, foreign keys, and constraints
+- [x] Create database seeders for:
+  - [x] Default roles (9 roles)
+  - [x] Default permissions (77 permissions)
+  - [x] Role-permission matrix
+  - [x] Sample departments (14 departments)
   - [ ] Super admin user
 
 **Dependencies**: SETUP-001

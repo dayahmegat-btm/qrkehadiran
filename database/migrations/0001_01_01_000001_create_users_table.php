@@ -12,13 +12,31 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->uuid('id')->primary();
+            $table->string('no_kp', 12)->unique();
+            $table->string('no_pekerja', 50)->unique()->nullable();
+            $table->string('nama');
+            $table->string('emel')->unique();
+            $table->string('no_telefon', 20)->nullable();
+            $table->string('kata_laluan_hash');
+            $table->unsignedBigInteger('jabatan_id')->nullable();
+            $table->string('jawatan', 100)->nullable();
+            $table->string('gred', 20)->nullable();
+            $table->string('peranan', 50)->nullable();
+            $table->boolean('status_aktif')->default(true);
+            $table->boolean('epsm_verified')->default(false);
+            $table->timestamp('epsm_last_synced_at')->nullable();
+            $table->json('epsm_raw_data')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreign('jabatan_id')->references('id')->on('jabatan')->onDelete('set null');
+
+            // Indexes
+            $table->index('jabatan_id');
+            $table->index('status_aktif');
+            $table->index('epsm_verified');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
