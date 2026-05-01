@@ -85,6 +85,42 @@ The system will implement hierarchical role-based access:
 - Implement comprehensive audit logging for all critical operations
 - Design for multi-tenancy from the start (department isolation)
 
+### Critical Business Rules to Remember
+
+When implementing features, always refer to `RULES.md` for complete details. Here are the most critical rules:
+
+**Authentication & Security**:
+- **Dynamic QR rotation**: QR codes for `qr_mod = 'dinamik'` must rotate every 30 seconds
+- **Token revocation**: When roles are revoked, invalidate session tokens within 60 seconds
+- **No. KP uniqueness**: IC numbers must be unique across the system (12 digits exactly)
+
+**Attendance & Calculation**:
+- **Attendance formula**: `(sesi_wajib_dihadiri ÷ jumlah_sesi_wajib) × 100`
+- **Certificate thresholds**: ≥80% = Full, 50-79% = Partial, <50% = None (configurable per event)
+- **80% rule**: For check-in/check-out events, must attend ≥80% of session duration to receive credit
+- **Optional sessions**: Don't count toward attendance %, but add to training hours
+
+**Substitution**:
+- **No chain substitution**: Substitute cannot be substituted again (prevent A→B→C)
+- **Mutual exclusivity**: If substitute approved for session X, original participant CANNOT attend session X
+- **Training hours**: Credited to substitute (person who actually attended), NOT original participant
+
+**Geolocation**:
+- **Radius validation**: Use `ST_Distance_Sphere` to calculate distance, verify ≤ `radius_geo_meter`
+- **Default radius**: 100 meters (range: 50-1000m)
+- **Online events**: Disable geolocation verification entirely
+
+**RBAC**:
+- **Permission union**: Multiple roles = union of all permissions (most permissive wins)
+- **Auditor read-only**: Hard-coded restriction - even if accidentally granted write permission, deny it
+- **Department scope**: Query scopes automatically filter by `skop_jabatan_id`
+
+**Data Validation**:
+- **Always validate at backend**: Never trust client-side validation alone
+- **Email domain**: Must be `.gov.my` for civil servants
+- **Date constraints**: `end_date >= start_date`, session dates within event period
+- **IC format**: 12 digits, first 6 = valid date (YYMMDD), digits 7-8 = valid state code (01-16)
+
 ### Testing Requirements
 - Test QR scanning on both Android and iOS devices
 - Test geolocation accuracy across different GPS providers
@@ -197,6 +233,7 @@ EPSM_API_CACHE_MINUTES=60
   - Contains security requirements (section 13)
 - **Database Schema**: `ERD.md` - Complete Entity Relationship Diagram with 18 tables
 - **API Integration**: `API_INTEGRATION.md` - EPSM API integration specification
+- **Business Rules**: `RULES.md` - Complete business rules, validation rules, calculation formulas, and compliance requirements (200+ rules across 15 categories)
 
 ## Future Phases (Out of Scope for v1.0)
 
