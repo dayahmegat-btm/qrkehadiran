@@ -127,6 +127,25 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        // Custom channels for e-DAFTAR Kedah
+
+        'epsm' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/epsm.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 30,
+            'replace_placeholders' => true,
+        ],
+
+        'audit' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/audit.log'),
+            'level' => 'info',
+            'days' => 90, // Keep audit logs for 90 days
+            'replace_placeholders' => true,
+            'permission' => 0640, // Restricted permissions for security
+        ],
+
     ],
 
 ];
