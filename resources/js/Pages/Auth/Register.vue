@@ -7,16 +7,17 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    no_kp: '',
+    nama: '',
+    emel: '',
+    kata_laluan: '',
+    kata_laluan_confirmation: '',
 });
 
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => {
-            form.reset('password', 'password_confirmation');
+            form.reset('kata_laluan', 'kata_laluan_confirmation');
         },
     });
 };
@@ -28,69 +29,85 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="no_kp" value="No. Kad Pengenalan" />
 
                 <TextInput
-                    id="name"
+                    id="no_kp"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.no_kp"
                     required
                     autofocus
-                    autocomplete="name"
+                    maxlength="12"
+                    placeholder="123456789012"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.no_kp" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="nama" value="Nama Penuh" />
 
                 <TextInput
-                    id="email"
+                    id="nama"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.nama"
+                    required
+                    autocomplete="name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.nama" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="emel" value="E-mel" />
+
+                <TextInput
+                    id="emel"
                     type="email"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.emel"
                     required
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="form.errors.emel" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="kata_laluan" value="Kata Laluan" />
 
                 <TextInput
-                    id="password"
+                    id="kata_laluan"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password"
+                    v-model="form.kata_laluan"
                     required
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError class="mt-2" :message="form.errors.kata_laluan" />
             </div>
 
             <div class="mt-4">
                 <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
+                    for="kata_laluan_confirmation"
+                    value="Sahkan Kata Laluan"
                 />
 
                 <TextInput
-                    id="password_confirmation"
+                    id="kata_laluan_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
+                    v-model="form.kata_laluan_confirmation"
                     required
                     autocomplete="new-password"
                 />
 
                 <InputError
                     class="mt-2"
-                    :message="form.errors.password_confirmation"
+                    :message="form.errors.kata_laluan_confirmation"
                 />
             </div>
 

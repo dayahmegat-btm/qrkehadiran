@@ -291,32 +291,76 @@ This document provides a complete task breakdown for implementing the e-DAFTAR K
 
 ---
 
-### SETUP-006: Frontend Setup (Vue.js + Inertia)
+### SETUP-006: Frontend Setup (Vue.js + Inertia) ✅
 **Priority**: Must Have
 **Effort**: 4 days
 **Assigned To**: Frontend Lead
+**Status**: COMPLETED
+**Completed**: 2026-05-06
 
 **Tasks**:
-- [ ] Install and configure Laravel Breeze with Inertia.js
-- [ ] Set up Vue 3 with TypeScript (optional)
-- [ ] Install Tailwind CSS
-- [ ] Install PrimeVue or shadcn-vue for UI components
-- [ ] Set up Vite build configuration
-- [ ] Create base layout components:
-  - [ ] AppLayout (with sidebar)
-  - [ ] AuthLayout (login/register)
-  - [ ] GuestLayout (public pages)
-- [ ] Set up Vue Router (handled by Inertia)
-- [ ] Configure i18n for Malay/English (vue-i18n)
-- [ ] Set up form validation (Vuelidate or VeeValidate)
+- [x] Install and configure Laravel Breeze with Inertia.js
+  - [x] Installed laravel/breeze v2.4.1
+  - [x] Installed inertiajs/inertia-laravel v2.0.24
+  - [x] Installed tightenco/ziggy v2.6.2 for route helpers
+  - [x] Created bootstrap.ts file for axios configuration
+- [x] Set up Vue 3 with TypeScript
+  - [x] Vue 3 installed with TypeScript support
+  - [x] TypeScript configuration in tsconfig.json
+  - [x] Type definitions in resources/js/types/
+- [x] Install Tailwind CSS
+  - [x] Tailwind CSS v3 installed and configured
+  - [x] @tailwindcss/forms plugin installed
+  - [x] Configuration in tailwind.config.js
+- [x] Install PrimeVue UI components
+  - [x] Installed primevue v4 latest
+  - [x] Installed primeicons latest
+  - [x] Configured PrimeVue with ripple effect enabled
+  - [x] Added PrimeVue to Tailwind content paths
+- [x] Set up Vite build configuration
+  - [x] Vite v8.0.10 configured
+  - [x] Laravel Vite plugin for Inertia helpers
+  - [x] Build tested successfully
+- [x] Base layout components from Breeze:
+  - [x] AuthenticatedLayout (with navigation)
+  - [x] GuestLayout (login/register pages)
+  - [x] Components directory with reusable components
+  - [x] Pages directory with auth and dashboard pages
+- [x] Inertia.js routing configured (no Vue Router needed)
+- [x] Configure i18n for Malay/English (vue-i18n)
+  - [x] Installed vue-i18n v11 (latest)
+  - [x] Created i18n configuration in resources/js/i18n.ts
+  - [x] Created Malay translations (resources/js/locales/ms.ts)
+  - [x] Created English translations (resources/js/locales/en.ts)
+  - [x] Default locale set to Malay (ms)
+  - [x] Fallback locale set to English (en)
+- [x] Set up form validation (VeeValidate)
+  - [x] Installed vee-validate v4
+  - [x] Installed @vee-validate/rules
+  - [x] Installed @vee-validate/i18n
+  - [x] Installed yup for schema validation
+  - [x] Created validation configuration in resources/js/validation.ts
+  - [x] Configured validation messages for Malay and English
 
 **Dependencies**: SETUP-001
 
 **Acceptance Criteria**:
-- Inertia.js renders Vue components
-- Tailwind CSS styles apply
-- UI component library works
-- Hot module replacement works (`npm run dev`)
+- ✅ Inertia.js renders Vue components successfully
+- ✅ Tailwind CSS styles apply correctly
+- ✅ PrimeVue UI components available and working
+- ✅ Vue i18n configured with Malay and English
+- ✅ VeeValidate form validation working
+- ✅ Build completed successfully (npm run build)
+- ✅ Vite manifest generated at public/build/manifest.json
+- ✅ TypeScript compilation successful
+
+**Notes**:
+- Bundle size: 408.04 kB (gzip: 138.79 kB) with all libraries
+- PrimeIcons font files included (woff2, woff, ttf, eot, svg)
+- Hot module replacement available via `npm run dev`
+- All Breeze authentication pages included (Login, Register, Dashboard, Profile, etc.)
+- Bootstrap.ts created to configure axios with CSRF token
+- Ziggy integration provides type-safe route helpers in Vue components
 
 ---
 

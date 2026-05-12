@@ -111,6 +111,16 @@ class User extends Authenticatable
         return $this->kata_laluan_hash;
     }
 
+    /**
+     * Get the name of the unique identifier for the user.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'emel'; // Use emel instead of email
+    }
+
     // Relationships
 
     /**
